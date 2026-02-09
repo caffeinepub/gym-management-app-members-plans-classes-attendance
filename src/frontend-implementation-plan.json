@@ -1,0 +1,321 @@
+{
+  "kind": "implementation_plan",
+  "version": "1.0",
+  "title": "Gym management app frontend (auth, navigation, members, plans, payments, attendance, classes)",
+  "requirements": [
+    {
+      "id": "REQ-1",
+      "summary": "Internet Identity sign-in, session handling, and gate all gym management screens behind authentication.",
+      "acceptanceCriteria": [
+        "Unauthenticated users can only see a sign-in screen/CTA.",
+        "Authenticated users can sign out and return to the unauthenticated view.",
+        "Authentication uses Internet Identity (no third-party auth)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "create",
+          "description": "Create the root app that reads Internet Identity auth state (via the existing useInternetIdentity hook), renders a dedicated signed-out landing/sign-in screen, and renders the authenticated app shell when logged in. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/auth/LoginButton.tsx",
+          "operation": "create",
+          "description": "Create a Login/Logout button composed from existing shadcn/ui components; on logout call clear() and clear all cached app data (tanstack query). Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/auth/ProfileSetupModal.tsx",
+          "operation": "create",
+          "description": "Create a first-login profile setup modal that checks getCallerUserProfile() and calls saveCallerUserProfile() to store a human name; avoid principal display. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/auth/RequireAuth.tsx",
+          "operation": "create",
+          "description": "Create an auth gate wrapper that blocks all management routes when identity is missing and redirects/renders the sign-in experience. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/hooks/useCurrentUser.ts",
+          "operation": "create",
+          "description": "Add frontend hooks for current user role/profile: call getCallerUserRole(), isCallerAdmin(), getCallerUserProfile(); return loading/error states suitable for gating and UI decisions. Verify the component's usage instructions before implementing."
+        }
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "summary": "UI for membership plans and member memberships (plan CRUD UI + assign plan/dates on member detail).",
+      "acceptanceCriteria": [
+        "Admins can create/edit/archive membership plans from the UI.",
+        "Admins can assign/change a member’s membership plan and set start/end dates.",
+        "Member detail view shows current plan, membership dates, and status."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/backend.d.ts",
+          "operation": "modify",
+          "description": "Extend the typed backend interface with membership plan and membership assignment capabilities used by the UI (plan listing/creation/update/archive, assigning plan + start/end dates), so frontend code remains type-safe once backend capabilities exist."
+        },
+        {
+          "path": "frontend/src/hooks/usePlans.ts",
+          "operation": "create",
+          "description": "Create React Query hooks for listing/creating/updating/archiving plans, using the actor from useActor and handling loading/empty/error states. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/pages/PlansPage.tsx",
+          "operation": "create",
+          "description": "Create Plans page with admin-only create/edit/archive UI using composed shadcn/ui form/table/dialog components; show read-only list for non-admin users. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/members/MembershipEditor.tsx",
+          "operation": "create",
+          "description": "Create a member-detail tab section that shows current plan/dates/status and allows admins to assign/change plan and set start/end dates. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/pages/MemberDetailPage.tsx",
+          "operation": "create",
+          "description": "Implement Member Detail view with tabs including a Membership tab that uses MembershipEditor and displays current plan and membership dates/status. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Wire the Plans route and the Member Detail membership tab into the authenticated navigation (no orphan screens). Verify the component's usage instructions before implementing."
+        }
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "summary": "UI to record manual payments and view per-member payment history with scrolling/pagination.",
+      "acceptanceCriteria": [
+        "Admins can record a payment for a selected member.",
+        "Member detail page shows a paginated or scrollable payment history list.",
+        "Payments are stored in the canister and can be queried by member."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/hooks/usePayments.ts",
+          "operation": "create",
+          "description": "Create hooks to fetch payments for a member and to add a payment, using getPaymentsForMember() and addPayment(); include query invalidation after mutations. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/members/PaymentsPanel.tsx",
+          "operation": "create",
+          "description": "Create a Payments tab panel for Member Detail: admin-only 'Record payment' dialog (amount/date method/notes per UI), plus a scrollable history list with basic client pagination (e.g., page size controls) and empty/error states. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/pages/MemberDetailPage.tsx",
+          "operation": "modify",
+          "description": "Wire the Payments tab into the Member Detail tabs and ensure it is gated/hidden for non-admins per role. Verify the component's usage instructions before implementing."
+        }
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "summary": "UI for attendance check-ins, attendance history, and a simple last-30-days total per member.",
+      "acceptanceCriteria": [
+        "Admins can perform a check-in for a selected member from the UI.",
+        "Attendance history for a member is visible in the member detail view.",
+        "A simple attendance summary metric is shown (e.g., count in last 30 days)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/hooks/useAttendance.ts",
+          "operation": "create",
+          "description": "Create hooks to fetch check-ins for a member and to record a check-in (checkIn()), including invalidation and robust loading/error states. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/members/AttendancePanel.tsx",
+          "operation": "create",
+          "description": "Create an Attendance tab panel: admin-only 'Check in now' action, a history list, and a computed summary metric (e.g., count of check-ins in last 30 days based on timestamps). Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/pages/MemberDetailPage.tsx",
+          "operation": "modify",
+          "description": "Wire the Attendance tab into Member Detail tabs and ensure admin-only actions are hidden/disabled for non-admins. Verify the component's usage instructions before implementing."
+        }
+      ]
+    },
+    {
+      "id": "REQ-6",
+      "summary": "UI for class scheduling and member registrations, including a calendar-like day/week browsing view.",
+      "acceptanceCriteria": [
+        "Admins can create/update/cancel classes.",
+        "Admins can register/unregister members for a class and see current enrollment count vs capacity.",
+        "A calendar-like list view (by day/week) is available for browsing classes."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/backend.d.ts",
+          "operation": "modify",
+          "description": "Extend the typed backend interface with class scheduling and registration capabilities used by the UI (class CRUD/cancel, list by date range, enroll/unenroll, enrollment counts)."
+        },
+        {
+          "path": "frontend/src/hooks/useClasses.ts",
+          "operation": "create",
+          "description": "Create hooks for loading classes for a selected date range (day/week) and for admin mutations (create/update/cancel, register/unregister). Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/pages/ClassesPage.tsx",
+          "operation": "create",
+          "description": "Create Classes page with a calendar-like list view (day/week toggle + grouped sections) and admin dialogs for create/update/cancel; show enrollment count vs capacity and admin controls for registration management. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/classes/ClassRegistrationDialog.tsx",
+          "operation": "create",
+          "description": "Create an admin-only dialog to register/unregister members for a selected class, including search/select member and showing current enrollment list/count. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Wire Classes route into authenticated navigation and ensure the page is reachable without dead ends. Verify the component's usage instructions before implementing."
+        }
+      ]
+    },
+    {
+      "id": "REQ-7",
+      "summary": "Frontend role/permissions UX: hide/disable admin actions for non-admins and provide admin management screen.",
+      "acceptanceCriteria": [
+        "Non-admin authenticated users cannot call admin-only backend methods (backend enforces authorization).",
+        "UI hides or disables admin-only actions for non-admins.",
+        "There is a bootstrap mechanism: the first authenticated principal can be set as admin (or a dedicated method restricted appropriately)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/auth/AccessDeniedScreen.tsx",
+          "operation": "create",
+          "description": "Create an access-denied screen for authenticated users without required role; use it for admin-only pages/actions where appropriate. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/auth/RequireAdmin.tsx",
+          "operation": "create",
+          "description": "Create an admin gate wrapper that uses isCallerAdmin()/getCallerUserRole() to guard admin-only routes and optionally render AccessDeniedScreen. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/pages/SettingsPage.tsx",
+          "operation": "create",
+          "description": "Create Settings page for admin management: show current role, allow admins to assign roles to principals (assignCallerUserRole) and link principals to members (linkPrincipalToMember) where needed for gym workflows. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/common/ActorErrorBoundary.tsx",
+          "operation": "create",
+          "description": "Add a small error presentation component used by admin mutation UIs to gracefully display authorization failures (e.g., trapped 'Unauthorized') without exposing sensitive details. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Wire Settings route and ensure admin gating is applied; ensure non-admin users do not see admin-only navigation items and cannot access admin pages. Verify the component's usage instructions before implementing."
+        }
+      ]
+    },
+    {
+      "id": "REQ-8",
+      "summary": "Create a consistent gym/fitness visual theme across all screens using Tailwind and composed UI components.",
+      "acceptanceCriteria": [
+        "All pages share a consistent header/nav layout and spacing system.",
+        "Theme avoids a default look and is applied to forms, tables/lists, and buttons consistently.",
+        "User-facing text is in English."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/index.css",
+          "operation": "modify",
+          "description": "Adjust CSS variables / base layer to a gym/fitness theme (brand primary/accent, background, typography defaults) while remaining Tailwind-friendly; keep consistent spacing/typography across the app."
+        },
+        {
+          "path": "frontend/tailwind.config.js",
+          "operation": "modify",
+          "description": "Extend Tailwind theme tokens (e.g., brand colors, shadows) as needed to support a coherent gym theme without editing shadcn/ui component sources."
+        },
+        {
+          "path": "frontend/src/components/layout/AppShell.tsx",
+          "operation": "create",
+          "description": "Create a shared layout with consistent header/nav, responsive container spacing, and page structure using composed shadcn/ui primitives (without editing frontend/src/components/ui). Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Apply AppShell consistently to all authenticated pages to ensure unified layout and styling. Verify the component's usage instructions before implementing."
+        }
+      ]
+    },
+    {
+      "id": "REQ-9",
+      "summary": "Implement primary UI pages and navigation: Dashboard, Members (list + search), Member Detail (tabbed), Plans, Classes, Settings; ensure loading/empty/error states.",
+      "acceptanceCriteria": [
+        "Users can navigate between the listed pages without dead ends.",
+        "Members list supports search by name (client-side or server-side).",
+        "All pages handle loading/empty/error states gracefully."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Implement and wire application routing and navigation entries for Dashboard, Members, Member Detail, Plans, Classes, and Settings; ensure authenticated gating and no orphan routes. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/pages/DashboardPage.tsx",
+          "operation": "create",
+          "description": "Create Dashboard page showing key counts (e.g., total members, active/inactive where available, recent activity placeholders) with loading/empty/error states. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/pages/MembersPage.tsx",
+          "operation": "create",
+          "description": "Create Members page that lists members (getAllMembers), supports search by name (client-side filter), and navigates to Member Detail; include loading/empty/error states. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/hooks/useMembers.ts",
+          "operation": "create",
+          "description": "Create hooks for member list + detail fetching (getAllMembers/getMember) and member mutations already available (createMember/updateMember) with cache invalidation and error handling. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/members/MemberFormDialog.tsx",
+          "operation": "create",
+          "description": "Create a dialog for creating/editing a member profile (name/contact) composed from shadcn/ui components; keep admin-only mutations gated in the UI. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/pages/MemberDetailPage.tsx",
+          "operation": "create",
+          "description": "Create Member Detail page with tabbed layout for Profile, Membership, Payments, Attendance; handle loading/empty/error states and show read-only content when user lacks admin role. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/members/ProfilePanel.tsx",
+          "operation": "create",
+          "description": "Create Profile tab panel for viewing/editing member fields (name/contact/status display); ensure non-admin users see read-only view and admins can edit using available backend capabilities. Verify the component's usage instructions before implementing."
+        }
+      ]
+    },
+    {
+      "id": "REQ-10",
+      "summary": "Add generated static brand images under the public assets directory and render them with graceful fallback on the sign-in/landing UI.",
+      "acceptanceCriteria": [
+        "Generated images are placed under frontend/public/assets/generated and referenced directly by the frontend.",
+        "Images render correctly in the app with no backend image serving.",
+        "App layout still works if images fail to load (graceful fallback)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/public/assets/generated/gym-logo.dim_512x512.png",
+          "operation": "create",
+          "description": "Add the generated logo image asset at the exact required path for static serving."
+        },
+        {
+          "path": "frontend/public/assets/generated/gym-hero.dim_1600x600.png",
+          "operation": "create",
+          "description": "Add the generated hero/banner image asset at the exact required path for static serving."
+        },
+        {
+          "path": "frontend/src/pages/SignedOutLanding.tsx",
+          "operation": "create",
+          "description": "Create the signed-out landing/sign-in page that renders frontend/public/assets/generated/gym-logo.dim_512x512.png and frontend/public/assets/generated/gym-hero.dim_1600x600.png with graceful onError fallback (layout remains usable if images fail). Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Wire SignedOutLanding as the only visible unauthenticated screen/CTA and ensure authenticated navigation does not render until signed in. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/main.tsx",
+          "operation": "modify",
+          "description": "Fix global stylesheet import to ensure Tailwind base styles load correctly (align the import with the existing frontend/index.css location) and keep the sign-in landing styling consistent."
+        }
+      ]
+    }
+  ]
+}

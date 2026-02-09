@@ -1,0 +1,103 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectStateVersion": 3,
+  "summary": "Gym management app project.",
+  "architectural_notes": [],
+  "known_issues": [],
+  "isFixRequest": false,
+  "imageRequirements": "## Required Images\n- Gym management app logo mark, modern fitness style (gym-logo.dim_512x512.png)\n- Wide hero/banner illustration featuring gym equipment silhouettes and abstract motion shapes (gym-hero.dim_1600x600.png)",
+  "existing_features": [
+    {
+      "id": "feature-implement-internet-identity-sign-in-and-maintain-an-authenticated-session-in-the-ui-gate-all-gym-management-features-behind-authentication",
+      "title": "Implement Internet Identity sign-in and maintain an authenticated session in the UI; gate all gym management features behind authentication.",
+      "reqIds": [
+        "REQ-1"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-backend-and-ui-for-membership-plans-and-member-memberships-including-plans-name-price-billing-period-assigning-a-plan-to-a-member-start-end-dates-and-current-membership-status",
+      "title": "Add backend and UI for membership plans and member memberships, including: plans (name, price, billing period), assigning a plan to a member, start/end dates, and current membership status.",
+      "reqIds": [
+        "REQ-3"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-backend-and-ui-for-payment-tracking-including-recording-payments-member-amount-date-method-notes-and-viewing-payment-history-per-member",
+      "title": "Add backend and UI for payment tracking, including recording payments (member, amount, date, method, notes) and viewing payment history per member.",
+      "reqIds": [
+        "REQ-4"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-backend-and-ui-for-attendance-check-ins-including-recording-a-check-in-for-a-member-timestamp-and-viewing-attendance-history-and-basic-totals-e-g-last-30-days",
+      "title": "Add backend and UI for attendance/check-ins, including: recording a check-in for a member (timestamp) and viewing attendance history and basic totals (e.g., last 30 days).",
+      "reqIds": [
+        "REQ-5"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-backend-and-ui-for-class-scheduling-including-classes-title-instructor-capacity-date-time-duration-and-member-enrollments-registrations",
+      "title": "Add backend and UI for class scheduling, including: classes (title, instructor, capacity, date/time, duration) and member enrollments/registrations.",
+      "reqIds": [
+        "REQ-6"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-simple-role-permissions-model-where-the-canister-stores-a-list-of-admin-principals-only-admins-can-manage-members-plans-payments-attendance-and-classes",
+      "title": "Add a simple role/permissions model where the canister stores a list of admin principals; only admins can manage members, plans, payments, attendance, and classes.",
+      "reqIds": [
+        "REQ-7"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-a-coherent-consistent-visual-theme-for-the-app-colors-typography-spacing-and-layout-suitable-for-a-gym-fitness-product-apply-it-across-all-screens-using-tailwind-and-existing-ui-components",
+      "title": "Create a coherent, consistent visual theme for the app (colors, typography, spacing, and layout) suitable for a gym/fitness product; apply it across all screens using Tailwind and existing UI components.",
+      "reqIds": [
+        "REQ-8"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-primary-ui-pages-and-navigation-dashboard-key-counts-members-list-search-member-detail-tabs-for-profile-membership-payments-attendance-plans-classes-schedule-view-and-settings-admin-management",
+      "title": "Implement primary UI pages and navigation: Dashboard (key counts), Members (list + search), Member Detail (tabs for profile/membership/payments/attendance), Plans, Classes (schedule view), and Settings (admin management).",
+      "reqIds": [
+        "REQ-9"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-generated-static-image-assets-to-support-branding-and-the-landing-sign-in-experience-and-render-them-from-the-frontend-static-assets-directory",
+      "title": "Add generated static image assets to support branding and the landing/sign-in experience, and render them from the frontend static assets directory.",
+      "reqIds": [
+        "REQ-10"
+      ],
+      "version": 1
+    }
+  ],
+  "new_feature_requests": [
+    {
+      "id": "AR-1",
+      "summary": "Create a gym management app",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-3",
+      "summary": "Add backend data models and CRUD APIs for gym members, including: member profile (name, contact fields), status (active/inactive), and creation/update timestamps.",
+      "reqIds": [
+        "REQ-2"
+      ],
+      "status": "pending"
+    }
+  ],
+  "gameProjectType": "none",
+  "projectName": "Gym management app (members, plans, classes, attendance)",
+  "clarification_mode": "instant",
+  "clarification_rounds": 0
+}

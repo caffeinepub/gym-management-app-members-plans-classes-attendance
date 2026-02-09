@@ -1,0 +1,216 @@
+{
+  "kind": "build_request",
+  "title": "Gym management app (members, plans, classes, attendance)",
+  "priority": "normal",
+  "requirements": [
+    {
+      "id": "REQ-1",
+      "text": "Implement Internet Identity sign-in and maintain an authenticated session in the UI; gate all gym management features behind authentication.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "A gym management app"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Unauthenticated users can only see a sign-in screen/CTA.",
+        "Authenticated users can sign out and return to the unauthenticated view.",
+        "Authentication uses Internet Identity (no third-party auth)."
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "text": "Add backend data models and CRUD APIs for gym members, including: member profile (name, contact fields), status (active/inactive), and creation/update timestamps.",
+      "target": "backend",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "A gym management app"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Backend exposes update/query methods to create, list, update, and deactivate/reactivate members.",
+        "Members are persisted in canister state across canister upgrades/restarts (stable storage).",
+        "List APIs return deterministic ordering (e.g., by createdAt desc) or support sorting parameters."
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "text": "Add backend and UI for membership plans and member memberships, including: plans (name, price, billing period), assigning a plan to a member, start/end dates, and current membership status.",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "A gym management app"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Admins can create/edit/archive membership plans from the UI.",
+        "Admins can assign/change a member’s membership plan and set start/end dates.",
+        "Member detail view shows current plan, membership dates, and status."
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "text": "Add backend and UI for payment tracking, including recording payments (member, amount, date, method, notes) and viewing payment history per member.",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "A gym management app"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Admins can record a payment for a selected member.",
+        "Member detail page shows a paginated or scrollable payment history list.",
+        "Payments are stored in the canister and can be queried by member."
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "text": "Add backend and UI for attendance/check-ins, including: recording a check-in for a member (timestamp) and viewing attendance history and basic totals (e.g., last 30 days).",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "A gym management app"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Admins can perform a check-in for a selected member from the UI.",
+        "Attendance history for a member is visible in the member detail view.",
+        "A simple attendance summary metric is shown (e.g., count in last 30 days)."
+      ]
+    },
+    {
+      "id": "REQ-6",
+      "text": "Add backend and UI for class scheduling, including: classes (title, instructor, capacity, date/time, duration) and member enrollments/registrations.",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "A gym management app"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Admins can create/update/cancel classes.",
+        "Admins can register/unregister members for a class and see current enrollment count vs capacity.",
+        "A calendar-like list view (by day/week) is available for browsing classes."
+      ]
+    },
+    {
+      "id": "REQ-7",
+      "text": "Add a simple role/permissions model where the canister stores a list of admin principals; only admins can manage members, plans, payments, attendance, and classes.",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "A gym management app"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Non-admin authenticated users cannot call admin-only backend methods (backend enforces authorization).",
+        "UI hides or disables admin-only actions for non-admins.",
+        "There is a bootstrap mechanism: the first authenticated principal can be set as admin (or a dedicated method restricted appropriately)."
+      ]
+    },
+    {
+      "id": "REQ-8",
+      "text": "Create a coherent, consistent visual theme for the app (colors, typography, spacing, and layout) suitable for a gym/fitness product; apply it across all screens using Tailwind and existing UI components.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "A gym management app"
+        ]
+      },
+      "acceptanceCriteria": [
+        "All pages share a consistent header/nav layout and spacing system.",
+        "Theme avoids a default look and is applied to forms, tables/lists, and buttons consistently.",
+        "User-facing text is in English."
+      ]
+    },
+    {
+      "id": "REQ-9",
+      "text": "Implement primary UI pages and navigation: Dashboard (key counts), Members (list + search), Member Detail (tabs for profile/membership/payments/attendance), Plans, Classes (schedule view), and Settings (admin management).",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "A gym management app"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Users can navigate between the listed pages without dead ends.",
+        "Members list supports search by name (client-side or server-side).",
+        "All pages handle loading/empty/error states gracefully."
+      ]
+    },
+    {
+      "id": "REQ-10",
+      "text": "Add generated static image assets to support branding and the landing/sign-in experience, and render them from the frontend static assets directory.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "A gym management app"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Generated images are placed under frontend/public/assets/generated and referenced directly by the frontend.",
+        "Images render correctly in the app with no backend image serving.",
+        "App layout still works if images fail to load (graceful fallback)."
+      ]
+    }
+  ],
+  "constraints": [
+    "Backend must remain a single Motoko actor with all logic in the main actor file.",
+    "Do not edit files under frontend/src/components/ui (compose them instead).",
+    "Do not edit immutable hook/bootstrap paths listed by the system; integrate via new components/hooks as needed.",
+    "Use English for all user-facing text."
+  ],
+  "nonGoals": [
+    "Implementing real payment processing (e.g., Stripe) or invoicing workflows beyond manual payment records.",
+    "Biometric, QR-code, or hardware-integrated door/access control check-in.",
+    "Real-time updates via websockets/push notifications.",
+    "Mobile-native app builds (iOS/Android)."
+  ],
+  "imageRequirements": {
+    "required": [
+      "Gym management app logo mark, modern fitness style (gym-logo.dim_512x512.png)",
+      "Wide hero/banner illustration featuring gym equipment silhouettes and abstract motion shapes (gym-hero.dim_1600x600.png)"
+    ],
+    "edits": []
+  },
+  "userProfileUpdate": {
+    "goalsToAdd": [],
+    "goalsToRemove": [],
+    "preferencesToAdd": [],
+    "preferencesToRemove": [],
+    "miscToAdd": [],
+    "miscToRemove": [],
+    "fieldsToSet": {},
+    "fieldsToDelete": []
+  }
+}

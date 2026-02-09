@@ -1,0 +1,126 @@
+{
+  "kind": "spec_vs_diff_report",
+  "version": "1.0",
+  "generatedAt": "2026-02-09T06:38:47.514Z",
+  "summary": "Diff adds a Motoko backend actor with member/payment/check-in/user profile types and some authorization scaffolding, plus a TanStack Router + React Query frontend with Internet Identity auth gating, an app shell theme, and member detail panels for profile, payments, and attendance. However, several requested features (plans/classes/settings admin management, memberships, stable persistence, and generated branding images) are not evidenced or are explicitly marked as “coming soon.”",
+  "missing_requirements": [
+    {
+      "id": "REQ-2",
+      "requirement": "Persist members in canister state across canister upgrades/restarts (stable storage) and provide deterministic ordering (e.g., createdAt desc) for list APIs.",
+      "reason": "The backend snippet shows in-memory Maps/Lists (e.g., `let members = Map.empty...`) and no evidence of `stable var` usage or preupgrade/postupgrade hooks. The list API implementation and ordering guarantees are not shown in the provided truncation.",
+      "evidence": [
+        "backend/main.mo (truncated)"
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "requirement": "Backend and UI for membership plans CRUD (create/edit/archive), and assigning/changing a member’s plan with start/end dates and status displayed in member detail.",
+      "reason": "The UI component `MembershipEditor` explicitly states the plans feature is “coming soon” and indicates backend implementation is required. No plan CRUD UI or assignment editor is evidenced. Backend types include plan-related fields on Member, but there is no evidenced Plan model or CRUD/assignment APIs in the visible diff.",
+      "evidence": [
+        "frontend/src/components/members/MembershipEditor.tsx",
+        "backend/main.mo (truncated)",
+        "frontend/src/App.tsx"
+      ]
+    },
+    {
+      "id": "REQ-6",
+      "requirement": "Backend and UI for class scheduling (create/update/cancel) and member registrations with enrollment count vs capacity, plus a calendar-like list view by day/week.",
+      "reason": "Although a `/classes` route exists, there is no evidence of class models/APIs on the backend or scheduling/registration UI components in the shown files. The required calendar-like list view is not evidenced.",
+      "evidence": [
+        "frontend/src/App.tsx",
+        "backend/main.mo (truncated)"
+      ]
+    },
+    {
+      "id": "REQ-7",
+      "requirement": "Settings page for admin principal management with a bootstrap mechanism (first principal can be set as admin or dedicated restricted method).",
+      "reason": "The AppShell hides the Settings nav item for non-admins, and the actor initialization calls `_initializeAccessControlWithSecret(...)`, but the diff does not show any UI for managing admins (listing/adding/removing admin principals) or a clearly defined bootstrap mechanism as specified (e.g., first authenticated principal).",
+      "evidence": [
+        "frontend/src/components/layout/AppShell.tsx (truncated)",
+        "frontend/src/hooks/useActor.ts",
+        "backend/main.mo (truncated)",
+        "frontend/src/App.tsx"
+      ]
+    },
+    {
+      "id": "REQ-9",
+      "requirement": "Members list supports search by name; all primary pages handle loading/empty/error states gracefully.",
+      "reason": "Routes are defined for the required pages, but the diff does not include the actual page implementations (e.g., MembersPage search UI/logic, Dashboard key counts, Plans/Classes schedule view, Settings admin management) so these acceptance criteria cannot be verified from the provided summary.",
+      "evidence": [
+        "frontend/src/App.tsx"
+      ]
+    },
+    {
+      "id": "REQ-10",
+      "requirement": "Add generated static image assets (logo and hero) under frontend/public/assets/generated and render them in the frontend with graceful fallback.",
+      "reason": "No files under `frontend/public/assets/generated` are shown in the diff summary, and no component shown references `gym-logo.dim_512x512.png` or `gym-hero.dim_1600x600.png`. Since some added files are omitted due to limits, this cannot be confirmed; based on visible evidence it is missing.",
+      "evidence": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/layout/AppShell.tsx (truncated)"
+      ]
+    }
+  ],
+  "hallucinated_features": [
+    {
+      "description": "User profile onboarding modal and backend user profile storage APIs (get/save caller profile) not requested as part of the gym management requirements.",
+      "reason": "BuildRequest does not mention user profiles or onboarding; diff adds `UserProfile` type, `getCallerUserProfile/saveCallerUserProfile`, and a mandatory profile setup modal flow after login.",
+      "evidence": [
+        "backend/main.mo (truncated)",
+        "frontend/src/components/auth/ProfileSetupModal.tsx",
+        "frontend/src/hooks/useCurrentUser.ts",
+        "frontend/src/App.tsx"
+      ]
+    },
+    {
+      "description": "Secret-token-based access control initialization via URL parameter `caffeineAdminToken`.",
+      "reason": "BuildRequest specifies a bootstrap mechanism for admins but does not request a secret token passed via URL parameters or an `_initializeAccessControlWithSecret` flow.",
+      "evidence": [
+        "frontend/src/hooks/useActor.ts"
+      ]
+    },
+    {
+      "description": "Social media footer links/icons (Facebook/X/Instagram) in the app shell.",
+      "reason": "Not mentioned in BuildRequest; added UI elements appear unrelated to requested gym management features.",
+      "evidence": [
+        "frontend/src/components/layout/AppShell.tsx (truncated)"
+      ]
+    }
+  ],
+  "confidence": 0.63,
+  "changed_files": [
+    "all_files_summary.json",
+    "backend/main.mo",
+    "frontend-file-summaries.txt",
+    "frontend/index.css",
+    "frontend/index.html",
+    "frontend/src/App.tsx",
+    "frontend/src/components/auth/AccessDeniedScreen.tsx",
+    "frontend/src/components/auth/LoginButton.tsx",
+    "frontend/src/components/auth/ProfileSetupModal.tsx",
+    "frontend/src/components/layout/AppShell.tsx",
+    "frontend/src/components/members/AttendancePanel.tsx",
+    "frontend/src/components/members/MemberFormDialog.tsx",
+    "frontend/src/components/members/MembershipEditor.tsx",
+    "frontend/src/components/members/PaymentsPanel.tsx",
+    "frontend/src/components/members/ProfilePanel.tsx",
+    "frontend/src/hooks/useActor.ts",
+    "frontend/src/hooks/useAttendance.ts",
+    "frontend/src/hooks/useCurrentUser.ts",
+    "frontend/src/hooks/useInternetIdentity.ts",
+    "frontend/src/hooks/useMembers.ts",
+    "frontend/src/hooks/usePayments.ts",
+    "frontend/src/hooks/useQueries.ts",
+    "frontend/src/index.css",
+    "frontend/src/main.tsx",
+    "frontend/src/pages/ClassesPage.tsx",
+    "frontend/src/pages/DashboardPage.tsx",
+    "frontend/src/pages/MemberDetailPage.tsx",
+    "frontend/src/pages/MembersPage.tsx",
+    "frontend/src/pages/PlansPage.tsx",
+    "frontend/src/pages/SettingsPage.tsx",
+    "frontend/src/pages/SignedOutLanding.tsx",
+    "frontend/src/utils/urlParams.ts",
+    "frontend/tailwind.config.js",
+    "project_state.json"
+  ]
+}

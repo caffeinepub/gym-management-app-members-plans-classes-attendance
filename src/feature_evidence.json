@@ -1,0 +1,200 @@
+{
+  "kind": "feature_evidence_report",
+  "features": [
+    {
+      "featureId": "feature-implement-internet-identity-sign-in-and-maintain-an-authenticated-session-in-the-ui-gate-all-gym-management-features-behind-authentication",
+      "featureTitle": "Implement Internet Identity sign-in and maintain an authenticated session in the UI; gate all gym management features behind authentication.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/auth/LoginButton.tsx",
+        "frontend/src/components/auth/ProfileSetupModal.tsx",
+        "frontend/src/hooks/useCurrentUser.ts"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-add-backend-and-ui-for-membership-plans-and-member-memberships-including-plans-name-price-billing-period-assigning-a-plan-to-a-member-start-end-dates-and-current-membership-status",
+      "featureTitle": "Add backend and UI for membership plans and member memberships, including: plans (name, price, billing period), assigning a plan to a member, start/end dates, and current membership status.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/members/MembershipEditor.tsx",
+        "frontend/src/pages/MemberDetailPage.tsx",
+        "frontend/src/pages/PlansPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-3"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-add-backend-and-ui-for-payment-tracking-including-recording-payments-member-amount-date-method-notes-and-viewing-payment-history-per-member",
+      "featureTitle": "Add backend and UI for payment tracking, including recording payments (member, amount, date, method, notes) and viewing payment history per member.",
+      "files": [
+        "frontend/src/components/members/PaymentsPanel.tsx",
+        "frontend/src/hooks/usePayments.ts",
+        "frontend/src/pages/MemberDetailPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-4"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-add-backend-and-ui-for-attendance-check-ins-including-recording-a-check-in-for-a-member-timestamp-and-viewing-attendance-history-and-basic-totals-e-g-last-30-days",
+      "featureTitle": "Add backend and UI for attendance/check-ins, including: recording a check-in for a member (timestamp) and viewing attendance history and basic totals (e.g., last 30 days).",
+      "files": [
+        "frontend/src/components/members/AttendancePanel.tsx",
+        "frontend/src/hooks/useAttendance.ts",
+        "frontend/src/pages/MemberDetailPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-5"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-add-backend-and-ui-for-class-scheduling-including-classes-title-instructor-capacity-date-time-duration-and-member-enrollments-registrations",
+      "featureTitle": "Add backend and UI for class scheduling, including: classes (title, instructor, capacity, date/time, duration) and member enrollments/registrations.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/pages/ClassesPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-6"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-add-a-simple-role-permissions-model-where-the-canister-stores-a-list-of-admin-principals-only-admins-can-manage-members-plans-payments-attendance-and-classes",
+      "featureTitle": "Add a simple role/permissions model where the canister stores a list of admin principals; only admins can manage members, plans, payments, attendance, and classes.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/auth/AccessDeniedScreen.tsx",
+        "frontend/src/pages/SettingsPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-7"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-create-a-coherent-consistent-visual-theme-for-the-app-colors-typography-spacing-and-layout-suitable-for-a-gym-fitness-product-apply-it-across-all-screens-using-tailwind-and-existing-ui-components",
+      "featureTitle": "Create a coherent, consistent visual theme for the app (colors, typography, spacing, and layout) suitable for a gym/fitness product; apply it across all screens using Tailwind and existing UI components.",
+      "files": [
+        "frontend/index.css",
+        "frontend/src/App.tsx",
+        "frontend/src/components/layout/AppShell.tsx",
+        "frontend/tailwind.config.js"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-8"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-implement-primary-ui-pages-and-navigation-dashboard-key-counts-members-list-search-member-detail-tabs-for-profile-membership-payments-attendance-plans-classes-schedule-view-and-settings-admin-management",
+      "featureTitle": "Implement primary UI pages and navigation: Dashboard (key counts), Members (list + search), Member Detail (tabs for profile/membership/payments/attendance), Plans, Classes (schedule view), and Settings (admin management).",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/members/MemberFormDialog.tsx",
+        "frontend/src/components/members/ProfilePanel.tsx",
+        "frontend/src/hooks/useMembers.ts",
+        "frontend/src/pages/DashboardPage.tsx",
+        "frontend/src/pages/MemberDetailPage.tsx",
+        "frontend/src/pages/MembersPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-9"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-add-generated-static-image-assets-to-support-branding-and-the-landing-sign-in-experience-and-render-them-from-the-frontend-static-assets-directory",
+      "featureTitle": "Add generated static image assets to support branding and the landing/sign-in experience, and render them from the frontend static assets directory.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/main.tsx",
+        "frontend/src/pages/SignedOutLanding.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-10"
+      ],
+      "confidence": "high"
+    }
+  ]
+}
